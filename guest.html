@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html ng-app="GuestApp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memory Game</title>
+  <link rel="icon" href="cubic.jpg">
+  <script src="angular.js"></script>
+  <link rel="stylesheet" href="bootstrap.css">
+  <script src="bootstrap.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" href="guest.css">
+</head>
+<body ng-controller="GuestController">
+    <nav class="navbar navbar-expand-sm" style="background:linear-gradient(135deg, #915bf6, #f15a6a, #f6995b);">
+        <div class="container-fluid">
+            <img class="navbar-brand" src="cubic.jpg" style="width:50px;">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation" style="background-color: #010e0e;">
+                <span class="navbar-toggler-icon" style="background-color:aqua;"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><img src="user.png" alt="Avatar" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;"></li>
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" style="background: transparent;border:none;color:black">
+                                Guest !
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li><a class="dropdown-item" href="#">FAQ</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item"><button class="btn btn-danger" ng-click="logout()">Logout</button></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+<center>
+    <h5 class="mt-5">Welcome Guest !,Click the cards to Start the game.</h5>
+<div class="container mt-5" >
+    <div class="game">
+        <div class="card" ng-repeat="card in cards" ng-class="{flipped: card.flipped, matched: card.matched}" ng-click="flipCard(card)">
+          <img class="card-front" ng-src="{{ card.front }}" alt="Card Face" >
+          <img class="card-back" src="imgfront.jpg" alt="Card Back" >
+        </div>
+    </div>
+    <h5 class="mt-5">Chances: {{ attempts }}</h5>
+    <h5>Score: {{ score }}</h5>
+</div>
+</center>
+<script src="guest.js"></script>
+</body>
+</html>

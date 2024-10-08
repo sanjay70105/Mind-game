@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="loginApp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Login and Signup</title>
+  <link rel="icon" href="loginicon.jpg">
+  <script src="angular.js"></script>
+ <link rel="stylesheet" href="bootstrap.css">
+ <script src="bootstrap.js"></script>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="index.css">
+</head>
+<body  ng-controller="myController">
+  <!--Login Page-->
+  <div class="container" ng-if="currentPage === 'login'">
+    <h2 class="text-center mb-5 text-white">Login</h2>
+    <form ng-submit="login()">
+      <div class="form-group">
+          <input type="text" class="form-control" placeholder=" " ng-model="loginData.username" required>
+          <label for="username">Username</label>
+          <i class="fa-sharp-duotone fa-solid fa-user" id="fontawesome"></i>
+        </div>
+   <div class="form-group">
+        <input type="password" class="form-control" placeholder=" " ng-model="loginData.password" required >
+        <label for="password">Password </label>
+        <i class="fa-sharp-duotone fa-solid fa-lock" id="fontawesome"></i>
+      </div>
+      <div class="form-group form-check ">
+        <input type="checkbox" class="form-check-input" ng-model="loginData.rememberMe "style="background-color:purple;color:blue;">
+        <h6 class="form-check-label" style="color:rgb(243, 243, 250);font-size: 15px;">Remember Me</h6>
+      </div>
+      <div class="error" ng-if="loginError">{{ loginError }}</div>
+      <button type="submit" class="btn btn-primary w-100 mb-3">Login</button>
+      <button class="btns" ng-click="guest()" >Login as guest</button>
+    </form>
+    <p class="text-center" style="color:rgb(251, 254, 254)">Don't have an account? <a href="#" ng-click="switchPage('signup')" style="color:rgb(219, 242, 10)">Sign up</a></p>
+  </div>
+  <!--SignUp Page-->
+  <div class="container signup" ng-if="currentPage === 'signup'">
+    <h2 class="text-center mb-5 text-white">Sign Up</h2>
+    <form ng-submit="signup()">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder=" " ng-model="signupData.username" required >
+        <label for="Username">Username</label>
+        <i class="fa-sharp-duotone fa-solid fa-user" id="fontawesome"></i>
+        </div>
+      <div class="form-group">
+        <input type="email" class="form-control" placeholder=" " ng-model="signupData.email" required >
+        <label for="Email">Email</label>
+        <i class="fa-solid fa-envelope"  id="fontawesome"></i>
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control" placeholder=" " ng-model="signupData.password" required >
+        <label for="password">Password</label>
+        <i class="fa-sharp-duotone fa-solid fa-lock" id="fontawesome"></i>
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control" placeholder=" " ng-model="signupData.confirmpassword" required >
+        <label for="Confirm Password">Confirm Password</label>
+      <i class="fa-solid fa-check" id="fontawesome"></i>
+      </div>
+      <div class="error" ng-if="signupError">{{ signupError }}</div>
+      <center>
+      <button type="submit" class="btn btn-danger" id="signbutton">Sign Up</button>
+    </center>
+    </form>
+    <p class="text-center mt-3" style="color:rgb(243, 248, 246)">Already have an account? <a href="#" ng-click="switchPage('login')" style="color:rgb(234, 226, 10);">Login</a></p>
+  </div>
+  <script src="index.js"></script>
+</body>
+</html>

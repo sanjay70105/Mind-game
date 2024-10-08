@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="gameApp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title> Card Matching Game</title>
+  <link rel="icon" href="cubic.jpg">
+  <script src="angular.js"></script>
+ <link rel="stylesheet" href="gamepage.css">
+ <link rel="stylesheet" href="bootstrap.css">
+ <script src="bootstrap.js"></script>
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body ng-controller="GameController">
+    <!-- Header -->
+    <nav class="navbar navbar-expand-sm" style="background:linear-gradient(135deg, #8d51fb, #f66876, #f6995b);">
+        <div class="container-fluid">
+            <img class="navbar-brand" src="cubic.jpg" style="width:50px;">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation" style="background-color: #010e0e;">
+                <span class="navbar-toggler-icon" style="background-color:aqua;"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><img src="./avtar/avtar{{$index+1}}.png" alt="Avatar" style="width: 50px; height: 50px; border-radius: 50%; margin-right: 10px;"></li>
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" style="background: transparent;border:none;color:black">
+                                {{username}} !
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li><a class="dropdown-item" href="#">Profile</a></li>
+                                <li><a class="dropdown-item" href="#">Settings</a></li>
+                                <li><a class="dropdown-item" href="#">FAQ</a></li>
+                            </ul>
+                        </div>
+                    </li>
+                    <li class="nav-item"><button class="btn btn-danger" ng-click="Logout()">Logout</button></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container game" style="margin-top: 40px;">
+        <div class="row">
+            <!-- Friend Requests -->
+            <div class="col-md-4 col-sm-6 friend">
+               <h4 style="margin-bottom:20px;text-align: center;">Friend Requests</h4>
+                <ul>
+                    <li ng-repeat="request in friendRequests" style="display: flex;align-items: center;gap:50px;">
+                        <img src="./avtar/avtar{{$index+2}}.png" style="width:50px;height:50px;">
+                        <h5 style="color:rgb(57, 250, 250);">{{ request.username }}</h5>
+                       <button class="btn btn-sm btn-success" ng-click="addFriend(request)" style="cursor: pointer;">Add friends</button>
+                    </li>
+                </ul>
+                <div class="no-friends" ng-if="friendRequests.length === 0">
+                    <h6 style="text-align: center;">No Friend Requests</h6>
+                </div>
+            </div>
+
+            <!--Memory Game-->
+            <div class="col-md-4 col-sm-6 mb-4" style="margin-top: 5%;">
+                <h5 style="text-align: center;">Welcome To Memory Game</h5>
+                <div ng-if="!gameStarted">
+                    <p style="text-align: center;">Click on the let's play in friend list to start the game!</p>
+                </div>
+                <div ng-if="gameStarted">
+                    <p class="p-1">Current Player: {{currentPlayer}}</p>
+                    <p class="p-1">Attempts left: {{attempts}}</p>
+                    <p class="p-1">{{username}}'s Score: {{currentPlayerScore}}</p>
+                    <p class="p-1">{{opponentPlayer}}'s Score: {{opponentPlayerScore}}</p>
+                </div>
+                <div class="game-message" style="font-size:22px; font-family: 'Satisfy', cursive;">{{gameMessage}}</div>
+                <br><br>
+                <div class="memory-game">
+                    <div class="frontcard" ng-repeat="card in cards" 
+                         ng-class="{flipped: card.flipped, matched: card.matched}" 
+                         ng-click="flipCard(card)">
+                        <img class="card-front" ng-src="{{ card.front }}" alt="Card Face">
+                        <img class="card-back" src="imgfront.jpg" alt="Card Back" style="border-radius: 15px;">
+                    </div>
+                </div>
+                <div ng-if="gameEnded" style="text-align: center;padding-top:30px;" >
+                    <h4 class="p-2">Game Over!</h4>
+                    <p>Winner: {{winner}}</p>
+                    <center>
+                    <button class="btn btn-danger" ng-click="initGame()">Reset</button>
+                </center>
+                </div>
+            </div>
+
+            <!-- Friend List -->
+            <div class="col-md-4 col-sm-6 friends-sidebar">
+                <h4 style="text-align: center;margin-bottom: 20px;">Friends List</h4>
+                <ul>
+                    <li ng-repeat="friend in friends" style="display: flex;column-gap: 30px;align-items: center;">
+                        <h6 style="color:rgb(245, 253, 253);font-size: 25px;">{{ friend.username }}</h6>
+                        <button class="btn btn-sm btn-primary" ng-click="showFriendCube(friend)" ng-disabled="gameStarted">Let's Play </button>
+                        <button class="btn btn-sm  btn-warning"  ng-click="removeFriend(friend)" style="cursor: pointer;">Kick out </button>
+                    </li>
+                </ul>
+                <div class="no-friends" ng-if="friends.length === 0">
+                   <h6 style="text-align: center;"> No Friends</h6>
+                </div>
+            </div>
+        </div>
+    </div>
+  <script src="gamepage.js"></script>
+</body>
+</html>
